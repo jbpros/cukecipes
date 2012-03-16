@@ -1,0 +1,21 @@
+{
+  "author": "Julien Biezemans <jb@jbpros.com> (http://jbpros.net)",
+  "name": "cukecipes",
+  "description": "Example Node.js application demonstrating Cucumber.js usages",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "cucumber.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "cucumber": "0.2.10"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
