@@ -10,9 +10,11 @@
   "scripts": {
     "test": "cucumber.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "2.5.11"
+  },
   "devDependencies": {
-    "cucumber": "0.2.10"
+    "cucumber": "0.2.11"
   },
   "optionalDependencies": {},
   "engines": {
