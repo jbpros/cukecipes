@@ -4,9 +4,7 @@ var Recipe   = require('../../app/models/recipe');
 
 var PersistenceWorld = function PersistenceWorld(callback) {
   var self = this;
-  this.cleanUp(function() {
-    callback();
-  });
+  this.cleanUp(callback);
 };
 
 PersistenceWorld.prototype.addNewRecipe = function (callback) {
@@ -19,7 +17,7 @@ PersistenceWorld.prototype.addNewRecipe = function (callback) {
   recipe.save(callback);
 };
 
-PersistenceWorld.prototype.assertNewRecipeIsListed = function (callback) {
+PersistenceWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
   var recipes = Recipe.
     where('title', this.newRecipeAttributes.title).
     where('ingredients', this.newRecipeAttributes.ingredients).
@@ -29,7 +27,7 @@ PersistenceWorld.prototype.assertNewRecipeIsListed = function (callback) {
     if (count == 1)
       callback();
     else
-      callback.fail("Expected the recipe to be listed once, got it " + count + " times.");
+      callback.fail("Expected the recipe to be in diary once, got it " + count + " times.");
   });
 };
 

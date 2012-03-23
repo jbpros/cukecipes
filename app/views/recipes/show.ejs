@@ -1,0 +1,9 @@
+<h2><%= recipe.title %></h2>
+
+<p>
+  <%-: recipe.ingredients | replace:/\n/g,"<br/>\n" %>
+</p>
+
+<p>
+  <%-: recipe.instructions | replace:/\n/g,"<br/>\n" %>
+</p>

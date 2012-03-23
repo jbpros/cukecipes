@@ -1,0 +1,17 @@
+<form method="post" action="/recipes">
+  <p>
+    <label for="recipe_title">Title</label>
+    <input type="text" name="recipe[title]" id="recipe_title"></input>
+  </p>
+  <p>
+    <label for="recipe_ingredients">Ingredients</label>
+    <textarea name="recipe[ingredients]" id="recipe_ingredients"></textarea>
+  </p>
+  <p>
+    <label for="recipe_instructions">Instructions</label>
+    <textarea name="recipe[instructions]" id="recipe_instructions"></textarea>
+  </p>
+  <p>
+    <button type="submit" name="save">Save</button>
+  </p>
+</form>

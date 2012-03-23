@@ -1,0 +1,8 @@
+<ul>
+  <% recipes.forEach(function(recipe) { %>
+    <li><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></li>
+  <% }); %>
+</ul>
+<p>
+  <a href="/recipes/new">Add recipe</a>
+</p>
