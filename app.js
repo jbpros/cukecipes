@@ -4,12 +4,14 @@ var Recipe  = require('./app/models/recipe');
 var DEFAULT_HTTP_LISTEN_PORT = 9797;
 
 var App = function App(options) {
-  options          = options || {};
-  this.port        = options['port'] || DEFAULT_HTTP_LISTEN_PORT;
+  var self = this;
+  options        = options || {};
+  self.port      = options['port'] || DEFAULT_HTTP_LISTEN_PORT;
+  self.logStream = options['logStream'] || process.stdout;
 
   var server = this.server = express.createServer();
   server.configure(function () {
-    server.use(express.logger());
+    server.use(express.logger({format: 'dev', stream: self.logStream}));
     server.use(express.bodyParser());
     server.use(server.router);
     server.set('view engine', 'ejs');

@@ -1,11 +1,15 @@
 var ZombieWorld = function ZombieWorld(callback) {
+  var LOG_FILE = __dirname + '/../../log/cucumber.zombie.log';
+
+  var fs      = require('fs');
   var App     = require('../../app.js');
   var Browser = require("zombie");
 
   var self = this;
 
   self.cleanUp(function() {
-    self.app     = new App({port: 21012});
+    var logFile  = fs.createWriteStream(LOG_FILE, {flags: 'a'});
+    self.app     = new App({port: 21012, logStream: logFile});
     self.app.start();
     self.browser = new Browser({ site: self.app.baseUrl });
     callback();
