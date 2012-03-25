@@ -16,8 +16,10 @@
     "ejs":      "0.6.1"
   },
   "devDependencies": {
-    "cucumber": "0.2.12",
-    "zombie":   "0.12.15"
+    "cucumber":          "0.2.12",
+    "zombie":            "0.12.15",
+    "selenium-launcher": "1.1.2",
+    "soda":              "0.2.5"
   },
   "optionalDependencies": {},
   "engines": {
