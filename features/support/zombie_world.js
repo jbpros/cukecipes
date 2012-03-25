@@ -7,19 +7,21 @@ var ZombieWorld = function ZombieWorld(callback) {
 
   var self = this;
 
-  self.cleanUp(function() {
+  var init = function() {
     var logFile  = fs.createWriteStream(LOG_FILE, {flags: 'a'});
-    self.app     = new App({port: 21012, logStream: logFile});
+    self.app     = new App({port: 21013, logStream: logFile});
     self.app.start();
     self.browser = new Browser({ site: self.app.baseUrl });
     callback();
-  });
+  };
+
+  self.cleanUp(init);
 };
 
 ZombieWorld.prototype.addNewRecipe = function (callback) {
   var self = this;
 
-  this.newRecipeAttributes = {
+  self.newRecipeAttributes = {
     title: "Cucumber au gratin",
     ingredients: "2 cucumbers\n\
 1 1/2 cups grated Gruyere cheese\n\
@@ -49,10 +51,13 @@ ZombieWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
     self.browser.clickLink(self.newRecipeAttributes.title, function() {
       if (self.browser.text('body').indexOf(self.newRecipeAttributes.title) == -1)
         callback.fail("Recipe title not found (" + self.newRecipeAttributes.title + ").");
+
       if (self.browser.text('body').indexOf(self.newRecipeAttributes.ingredients) == -1)
         callback.fail("Recipe ingredients not found (" + self.newRecipeAttributes.ingredients + ").");
+
       if (self.browser.text('body').indexOf(self.newRecipeAttributes.instructions) == -1)
         callback.fail("Recipe instructions not found (" + self.newRecipeAttributes.instructions + ").");
+
       else
         callback();
     });
