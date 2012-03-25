@@ -16,7 +16,7 @@ var SeleniumWorld = function SeleniumWorld(callback) {
     self.app.start();
     selenium(function(err, selenium) {
       process.on('exit', function() {
-        //selenium.kill();
+        selenium.kill();
       });
 
       self.browser = soda.createClient({
