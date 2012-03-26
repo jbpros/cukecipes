@@ -1,5 +1,5 @@
 window.supportCode = function () {
-  var SAFETY_WAIT_TIMEOUT = 15;
+  var SAFETY_WAIT_TIMEOUT = 20;
 
   // --- WORLD ---
 
@@ -61,7 +61,7 @@ window.supportCode = function () {
 
   World.prototype.cleanUp = function (callback) {
     var resetAllRemotely = RemoteCommand("reset_all");
-    var visitRoot        = this.browser.visitUrl("/");
+    var visitRoot        = this.browser.visitUrl("about:blank");
     this.runInSequence(
       resetAllRemotely,
       visitRoot,
@@ -168,7 +168,7 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
         return function visitUrl(callback) {
           _visitUrl(url);
           var state = $frame.get()[0].contentDocument.readyState;
-          setTimeout(callback, SAFETY_WAIT_TIMEOUT);
+          callback();
         };
       },
 
