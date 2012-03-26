@@ -40,19 +40,7 @@ var SeleniumWorld = function SeleniumWorld(callback) {
 SeleniumWorld.prototype.addNewRecipe = function (callback) {
   var self = this;
 
-  self.newRecipeAttributes = {
-    title: "Cucumber au gratin",
-    ingredients: "2 cucumbers\n\
-1 1/2 cups grated Gruyere cheese\n\
-salt & black pepper\n3-4 Tbs butter",
-    instructions: "Peel the cucumbers & cut them into 3 inch pieces.\n\
-Slice each piece in half lengthwise & remove the seeds.\n\
-Cook the cucumber in boiling salted water for 10 minutes, the drain & dry.\n\
-Arrange a layer of cucumber in the base of a buttered ovenproof dish.\n\
-Sprinkle with a third of the cheese, & season with salt & pepper.\n\
-Repeat these layers, finishing with cheese. Dot the top with butter.\n\
-Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes."
-  };
+  self.prepareNewRecipeAttributes();
   self.browser
     .chain
     .open('/')
@@ -99,6 +87,19 @@ SeleniumWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 SeleniumWorld.prototype.cleanUp = function (callback) {
   var Recipe = require('../../app/models/recipe');
   Recipe.collection.drop(callback);
+};
+
+SeleniumWorld.prototype.prepareNewRecipeAttributes = function () {
+  this.newRecipeAttributes = {
+    title: "Curried cucumber",
+    ingredients: "1 cucumber\n\
+1/4 pint heavy cream\n\
+1 tsp curry powder",
+    instructions: "Peel and cut cucumber into 1/2 inch cubes (Seeds scraped out).\n\
+Blanch in salted boiling water for 5 minutes, drain, put them into small saucepan with the cream in which the curry has been mixed.\n\
+Add salt to taste.\n\
+Let simmer 10 minutes and serve."
+  };
 };
 
 exports.World = SeleniumWorld;

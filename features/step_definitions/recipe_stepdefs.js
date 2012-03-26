@@ -1,9 +1,4 @@
-module.exports = function() {
-  var recipe;
-
-  var worldType = process.env.WORLD_TYPE || 'persistence';
-  this.World = require('../support/' + worldType + '_world').World;
-
+var recipeStepDefs = function() {
   this.When(/^I add a recipe$/, function(callback) {
     this.addNewRecipe(callback);
   });
@@ -12,3 +7,11 @@ module.exports = function() {
     this.assertNewRecipeIsInDiary(callback);
   });
 };
+
+// Node.js:
+if (typeof(module) !== 'undefined')
+  module.exports = recipeStepDefs;
+
+// Browser:
+if (typeof(window) !== 'undefined')
+  window.stepDefs = recipeStepDefs;

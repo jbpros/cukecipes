@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Cukecipes's features</title>
+    <link href="stylesheets/cukes.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="vendor/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="vendor/cucumber.js"></script>
+    <script type="text/javascript" src="javascripts/support_code.js"></script>
+    <script type="text/javascript" src="javascripts/stepdefs.js"></script>
+    <script type="text/javascript" src="javascripts/runner.js"></script>
+  </head>
+  <body>
+    <% features.forEach(function(feature) { %>
+    <script type="text/x-gherkin"><%- feature %></script>
+    <% }); %>
+    <h1>Cukecipes's features</h1>
+    <iframe id="cucumber-browser" src="/"></iframe>
+    <p><button id="run">Cuke!</button></p>
+    <div id="output" class="cucumber-report"></div>
+    <div id="errors-container"><pre id="errors"></pre></div>
+  </body>
+</html>

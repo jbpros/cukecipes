@@ -21,19 +21,7 @@ var ZombieWorld = function ZombieWorld(callback) {
 ZombieWorld.prototype.addNewRecipe = function (callback) {
   var self = this;
 
-  self.newRecipeAttributes = {
-    title: "Cucumber au gratin",
-    ingredients: "2 cucumbers\n\
-1 1/2 cups grated Gruyere cheese\n\
-salt & black pepper\n3-4 Tbs butter",
-    instructions: "Peel the cucumbers & cut them into 3 inch pieces.\n\
-Slice each piece in half lengthwise & remove the seeds.\n\
-Cook the cucumber in boiling salted water for 10 minutes, the drain & dry.\n\
-Arrange a layer of cucumber in the base of a buttered ovenproof dish.\n\
-Sprinkle with a third of the cheese, & season with salt & pepper.\n\
-Repeat these layers, finishing with cheese. Dot the top with butter.\n\
-Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes."
-  };
+  self.prepareNewRecipeAttributes();
   self.browser.visit('/', function() {
     self.browser.clickLink('Add recipe', function() {
       self.browser
@@ -67,6 +55,30 @@ ZombieWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 ZombieWorld.prototype.cleanUp = function (callback) {
   var Recipe = require('../../app/models/recipe');
   Recipe.collection.drop(callback);
+};
+
+ZombieWorld.prototype.prepareNewRecipeAttributes = function () {
+  this.newRecipeAttributes = {
+    title: "Stuffed cucumbers",
+    ingredients: "2 cucumbers\n\
+1/2 lb ground beef or Italian sausage\n\
+1/2 cup bread crumbs\n\
+1 or 2 cloves garlic, crushed\n\
+1 egg\n\
+1 can or jar of your favorite spaghetti sauce\n\
+4 slices of Provolone or Swiss cheese (or use enough crumbled blue cheese to cover)",
+    instructions: "Peel cucumbers and cut in half, lengthwise.\n\
+Scrape away seeds with a spoon.\n\
+Mix meat, bread crumbs, garlic and egg.\n\
+Fill cucumber \"boats\" with this mixture.\n\
+Place in microwave dish and pour tomato sauce over the stuffed cucumbers.\n\
+Cover each with a slice of cheese (select cheese according to desired degree of tangyness. If sauce already contains Parmesan cheese you may wish to omit the cheese.)\n\
+\n\
+Cover dish, and microwave on 80% power for five minutes.\n\
+Turn dish 1/2 turnand repeat.\n\
+Test cucumbers with a fork for doneness.\n\
+If they appear too hard, cook another 5 minutes on 80%."
+  };
 };
 
 exports.World = ZombieWorld;

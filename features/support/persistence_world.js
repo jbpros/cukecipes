@@ -8,11 +8,7 @@ var PersistenceWorld = function PersistenceWorld(callback) {
 };
 
 PersistenceWorld.prototype.addNewRecipe = function (callback) {
-  this.newRecipeAttributes = {
-    title: "Cucumber au gratin",
-    ingredients: "2 cucumbers\n1 1/2 cups grated Gruyere cheese\nsalt & black pepper\n3-4 Tbs butter",
-    instructions: "Peel the cucumbers & cut them into 3 inch pieces. Slice each piece in half lengthwise & remove the seeds. Cook the cucumber in boiling salted water for 10 minutes, the drain & dry. Arrange a layer of cucumber in the base of a buttered ovenproof dish. Sprinkle with a third of the cheese, & season with salt & pepper. Repeat these layers, finishing with cheese. Dot the top with butter. Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes."
-  };
+  this.prepareNewRecipeAttributes();
   var recipe = new Recipe(this.newRecipeAttributes);
   recipe.save(callback);
 };
@@ -33,6 +29,31 @@ PersistenceWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 
 PersistenceWorld.prototype.cleanUp = function (callback) {
   Recipe.collection.drop(callback);
+};
+
+PersistenceWorld.prototype.prepareNewRecipeAttributes = function () {
+  this.newRecipeAttributes = {
+    title: "Cucumber mousse",
+    ingredients: "1 T plain gelatin\n\
+3 T cold water\n\
+2 T vinegar, or lemon or lime juice\n\
+1 t grated onion\n\
+3/4 t salt\n\
+1/4 t paprika\n\
+1 cup cucumber, pared, seeded, and chopped\n\
+1/2 whipping cream",
+    instructions: "Soak gelatin in water.\n\
+Dissolve in a saucepan over heat.\n\
+Add vinegar or juice, onion, salt, and paprika.\n\
+Chill this mixture until almost set.\n\
+\n\
+Drain cucumbers well.\n\
+Whip cream until stiff.\n\
+Beat the gelatin mixture gradually into the cream.\n\
+Fold in cucumbers.\n\
+Fill a wet mold with mixture and chill thoroughly.\n\
+When set, invert onto a platter and garnish."
+  };
 };
 
 exports.World = PersistenceWorld;
