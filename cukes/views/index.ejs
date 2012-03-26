@@ -15,9 +15,9 @@
     <% features.forEach(function(feature) { %>
     <script type="text/x-gherkin"><%- feature %></script>
     <% }); %>
-    <h1>Cukecipes's features</h1>
+    <h1>Cucumber.js runner</h1>
     <iframe id="cucumber-browser" src="/"></iframe>
-    <p><button id="run">Cuke!</button></p>
+    <p class="actions"><button id="run">Cuke!</button></p>
     <div id="output" class="cucumber-report"></div>
     <div id="errors-container"><pre id="errors"></pre></div>
   </body>

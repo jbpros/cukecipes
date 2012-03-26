@@ -14,6 +14,7 @@ var App = function App(options) {
     server.use(express.logger({format: 'dev', stream: self.logStream}));
     server.use(express.bodyParser());
     server.use(server.router);
+    server.use(express.static(__dirname + '/public'));
     server.set('view engine', 'ejs');
     server.set('views', __dirname + '/app/views');
     server.set('view options', {

@@ -1,0 +1,104 @@
+/*
+body, a {
+  color:rgba(0,255,255,0.5);
+  text-shadow: rgba(255,0,0,0.5) 6px 0px 0px;
+}
+
+h1 {
+  text-shadow: rgba(255,0,0,0.5) 1px 0px 0px;
+}
+
+h2 {
+  text-shadow: rgba(255,0,0,0.5) 3px 0px 0px;
+}
+*/
+
+/* @import url(http://fonts.googleapis.com/css?family=Norican); */
+@font-face {
+  font-family: 'Norican';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Norican Regular'), local('Norican-Regular'), url('http://themes.googleusercontent.com/static/fonts/norican/v1/fJyH16wZvqLrtcqcBNlaAgLUuEpTyoUstqEm5AMlJo4.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Inika';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inika'), url('http://themes.googleusercontent.com/static/fonts/inika/v1/SfUXB8ocE5dNKtU5DSQbGKCWcynf_cDxXwCLxiixG1c.woff') format('woff');
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 20px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Inika", serif;
+  font-size: 16px;
+  line-height: 25px;
+  color: #333;
+  background-color: #fff;
+}
+
+a, a:visited {
+  color: darkred;
+}
+
+h1 {
+  font-family: Norican;
+  font-size: 40px;
+  text-align:center;
+  text-decoration:underline;
+}
+
+h2 {
+  font-family: Norican;
+  font-size: 30px;
+}
+
+.picnic {
+  background-color:white;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(.1, transparent), color-stop(.1, rgba(200, 0, 0, .1)), to(rgba(200, 0, 0, .1))),
+  -webkit-gradient(linear, 0 0, 100% 0, color-stop(.1, transparent), color-stop(.1, rgba(200, 0, 0, .1)), to(rgba(200, 0, 0, .1)));
+  background-image: -webkit-linear-gradient(transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1)),
+  -webkit-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1));
+  background-image: -moz-linear-gradient(transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1)),
+  -moz-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1));
+  background-image: -ms-linear-gradient(transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1)),
+  -ms-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1));
+  background-image: -o-linear-gradient(transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1)),
+  -o-linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1));
+  background-image: linear-gradient(transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1)),
+  linear-gradient(0deg, transparent 50%, rgba(200, 0, 0, .1) 50%, rgba(200, 0, 0, .1));
+}
+
+.stripes {
+  -webkit-background-size: 50px 50px;
+  -moz-background-size: 50px 50px;
+  background-size: 50px 50px; /* Controls the size of the stripes */
+  -moz-box-shadow: 1px 1px 8px gray;
+  -webkit-box-shadow: 1px 1px 8px gray;
+  box-shadow: 1px 1px 8px gray;
+}
+
+.recipes {
+  font-size: 1.2em;
+}
+
+label {
+  display: block;
+}
+
+input[type=text] {
+  width: 50%;
+}
+
+textarea {
+  width: 100%;
+  height: 6em;
+}
