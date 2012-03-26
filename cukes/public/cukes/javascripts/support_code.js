@@ -1,4 +1,6 @@
 window.supportCode = function () {
+  var SAFETY_WAIT_TIMEOUT = 15;
+
   // --- WORLD ---
 
   var World = function World(callback) {
@@ -165,7 +167,8 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
       visitUrl: function (url) {
         return function visitUrl(callback) {
           _visitUrl(url);
-          callback();
+          var state = $frame.get()[0].contentDocument.readyState;
+          setTimeout(callback, SAFETY_WAIT_TIMEOUT);
         };
       },
 
@@ -213,7 +216,7 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
               },
               callback
             );
-          }, 100); // TODO: remove this ugly hack
+          }, SAFETY_WAIT_TIMEOUT); // TODO: remove this ugly hack
         };
       },
 
