@@ -1,7 +1,8 @@
 Feature: manage recipes
-  As a veggie
-  In order to remember great cucumber recipes
-  I want to manage them in a diary
+  Many of us love cucumbers. We love them so much we decided to
+  start a diary of all those delicious recipes with cucumbers.
+
+  Let's call it “Cukecipes”.
 
   Scenario: add recipe
     When I add a recipe
