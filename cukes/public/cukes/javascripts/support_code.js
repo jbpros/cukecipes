@@ -55,18 +55,6 @@ window.supportCode = function () {
     );
   };
 
-  // World.prototype.assertTaskCountEqual = function (expectedTaskCount, callback) {
-  //   var visitRoot   = this.browser.visitUrl("/");
-  //   var waitForTask = function (callback) {
-  //     this.browser.waitForSelector("tr.task", callback);
-  //   };
-  //   this.runInSequence(
-  //     visitRoot,
-  //     waitForTask,
-  //     callback
-  //   );
-  // };
-
   // helpers
 
   World.prototype.cleanUp = function (callback) {
