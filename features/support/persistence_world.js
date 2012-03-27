@@ -28,7 +28,9 @@ PersistenceWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 };
 
 PersistenceWorld.prototype.cleanUp = function (callback) {
-  Recipe.collection.drop(callback);
+  Recipe.collection.drop(function (err) {
+    callback();
+  });
 };
 
 PersistenceWorld.prototype.prepareNewRecipeAttributes = function () {

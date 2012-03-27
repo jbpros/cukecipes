@@ -86,7 +86,9 @@ SeleniumWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 
 SeleniumWorld.prototype.cleanUp = function (callback) {
   var Recipe = require('../../app/models/recipe');
-  Recipe.collection.drop(callback);
+  Recipe.collection.drop(function (err) {
+    callback();
+  });
 };
 
 SeleniumWorld.prototype.prepareNewRecipeAttributes = function () {

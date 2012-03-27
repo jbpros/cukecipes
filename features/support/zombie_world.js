@@ -54,7 +54,9 @@ ZombieWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 
 ZombieWorld.prototype.cleanUp = function (callback) {
   var Recipe = require('../../app/models/recipe');
-  Recipe.collection.drop(callback);
+  Recipe.collection.drop(function (err) {
+    callback();
+  });
 };
 
 ZombieWorld.prototype.prepareNewRecipeAttributes = function () {
