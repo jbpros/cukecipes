@@ -81,9 +81,6 @@ h2 {
   -webkit-background-size: 50px 50px;
   -moz-background-size: 50px 50px;
   background-size: 50px 50px; /* Controls the size of the stripes */
-  -moz-box-shadow: 1px 1px 8px gray;
-  -webkit-box-shadow: 1px 1px 8px gray;
-  box-shadow: 1px 1px 8px gray;
 }
 
 .recipes {
