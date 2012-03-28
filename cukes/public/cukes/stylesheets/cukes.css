@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  margin: 1em;
+  margin: 12px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.2em;
@@ -31,6 +31,26 @@ h1:before {
 
 .actions {
   text-align:center;
+}
+
+.blank {
+  background: #fff;
+}
+
+#message {
+  text-align:center;
+  margin-top:-.5em;
+  line-height:1em;
+  position:absolute;
+  width:100%;
+  margin-left:-12px;
+  top:50%;
+  font-style:italic;
+  font-weight:bold;
+  font-size:400%;
+  color: #eee;
+  text-shadow: 1px 3px 3px #aaa;
+  opacity:.6;
 }
 
 #run {

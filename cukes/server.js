@@ -8,7 +8,11 @@ var app     = new App();
 app.server.use(express.static(__dirname + '/public'));
 app.server.get('/cukes', function (req, res) {
   var features = [fs.readFileSync(__dirname + '/../features/manage_recipes.feature')];
-  res.render(__dirname + '/views/index', {features: features, layout: false});
+  res.render(__dirname + '/views/index', {features: features, layout: 'layouts/application'});
+});
+
+app.server.get('/cukes/blank', function (req, res) {
+  res.render(__dirname + '/views/blank', {layout: 'layouts/application'});
 });
 
 app.server.post('/cukes/reset_all', function (req, res) {
