@@ -1,20 +1,24 @@
-window.supportCode = function () {
+var CukeStallSupport = function CukeStallSupport () {
+  if (typeof window == 'undefined')
+    return; // do not run outside of browsers
+
   var SAFETY_WAIT_TIMEOUT = 20;
 
   // --- WORLD ---
 
-  var World = function World(callback) {
+  var CukeStallWorld = function CukeStallWorld(callback) {
     this.browser = new FrameBrowser('#cucumber-browser');
     this.runInSequence(
       this.cleanUp,
       callback
     );
   };
-  this.World = World;
+
+  this.World = CukeStallWorld;
 
   // DSL
 
-  World.prototype.addNewRecipe = function (callback) {
+  CukeStallWorld.prototype.addNewRecipe = function (callback) {
     var self = this;
 
     self.prepareNewRecipeAttributes();
@@ -37,7 +41,7 @@ window.supportCode = function () {
     );
   };
 
-  World.prototype.assertNewRecipeIsInDiary = function (callback) {
+  CukeStallWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
     var self = this;
 
     var visitRoot                         = self.browser.visitUrl("/");
@@ -59,7 +63,7 @@ window.supportCode = function () {
 
   // helpers
 
-  World.prototype.cleanUp = function (callback) {
+  CukeStallWorld.prototype.cleanUp = function (callback) {
     var resetAllRemotely = RemoteCommand("reset_all");
     var visitRoot        = this.browser.visitUrl("about:blank");
     this.runInSequence(
@@ -69,7 +73,7 @@ window.supportCode = function () {
     );
   };
 
-  World.prototype.prepareNewRecipeAttributes = function () {
+  CukeStallWorld.prototype.prepareNewRecipeAttributes = function () {
     this.newRecipeAttributes = {
       title: "Cucumber au gratin",
       ingredients: "2 cucumbers\n\
@@ -85,7 +89,7 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
     };
   };
 
-  World.prototype.runInSequence = function () {
+  CukeStallWorld.prototype.runInSequence = function () {
     var self      = this;
     var funcCalls = Array.prototype.slice.apply(arguments);
     var funcCall  = funcCalls.shift();
@@ -100,7 +104,7 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
   // Remote calls
 
   var getRemoteUrlForFunction = function (funcName) {
-    return "/cukes/" + funcName;
+    return "/cukestall/" + funcName;
   };
 
   var RemoteQuery = function RemoteQuery(funcName, data) {
@@ -256,3 +260,5 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
     return self;
   };
 };
+
+module.exports = CukeStallSupport;

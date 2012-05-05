@@ -13,10 +13,12 @@
   "dependencies": {
     "mongoose": "2.5.11",
     "express":  "2.5.8",
-    "ejs":      "0.6.1"
+    "ejs":      "0.6.1",
+    "nopt":     "1.0.10"
   },
   "devDependencies": {
     "cucumber":          "0.2.12",
+    "cukestall":         "0.0.0",
     "zombie":            "0.12.15",
     "selenium-launcher": "1.1.2",
     "soda":              "0.2.5"

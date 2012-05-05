@@ -11,7 +11,3 @@ var recipeStepDefs = function() {
 // Node.js:
 if (typeof(module) !== 'undefined')
   module.exports = recipeStepDefs;
-
-// Browser:
-if (typeof(window) !== 'undefined')
-  window.stepDefs = recipeStepDefs;
