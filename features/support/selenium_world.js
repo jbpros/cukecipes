@@ -10,15 +10,26 @@ var SeleniumWorld = function SeleniumWorld(callback) {
 
   var self = this;
 
+  var withSelenium = function (callback) {
+    if (global._seleniumInstance) {
+      callback(null, global._seleniumInstance);
+    } else {
+      selenium(function (err, selenium) {
+        global._seleniumInstance = selenium;
+        process.on('exit', function() {
+          selenium.kill();
+        });
+        callback(null, selenium);
+      });
+    }
+  };
+
   var init = function () {
     var logFile  = fs.createWriteStream(LOG_FILE, {flags: 'a'});
     self.app     = new App({port: 21014, logStream: logFile});
     self.app.start();
-    selenium(function(err, selenium) {
-      process.on('exit', function() {
-        selenium.kill();
-      });
 
+    withSelenium(function(err, selenium) {
       self.browser = soda.createClient({
         host: selenium.host,
         port: selenium.port,
@@ -87,6 +98,16 @@ SeleniumWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
 SeleniumWorld.prototype.cleanUp = function (callback) {
   var Recipe = require('../../app/models/recipe');
   Recipe.collection.drop(function (err) {
+    callback();
+  });
+};
+
+SeleniumWorld.prototype.tearDown = function (callback) {
+  var self = this;
+  self.app.stop();
+  self.browser.close(function () {
+    self.app = null;
+    self.browser = null;
     callback();
   });
 };

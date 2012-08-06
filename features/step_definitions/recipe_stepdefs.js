@@ -1,4 +1,12 @@
 var recipeStepDefs = function() {
+  this.After(function (callback) {
+    if (this.tearDown) {
+      this.tearDown(callback);
+    } else {
+      callback();
+    }
+  });
+
   this.When(/^I add a recipe$/, function(callback) {
     this.addNewRecipe(callback);
   });
