@@ -2,7 +2,7 @@
   "author": "Julien Biezemans <jb@jbpros.com> (http://jbpros.net)",
   "name": "cukecipes",
   "description": "Example Node.js application demonstrating Cucumber.js usages",
-  "version": "0.0.0",
+  "version": "0.0.0-10",
   "repository": {
     "url": ""
   },
@@ -17,9 +17,9 @@
     "nopt":     "1.0.10"
   },
   "devDependencies": {
-    "cucumber":          "0.2.12",
-    "cukestall":         "0.0.1",
-    "zombie":            "0.12.15",
+    "cucumber": "0.2.19",
+    "cukestall": "0.0.1",
+    "zombie": "0.12.15",
     "selenium-launcher": "1.1.2",
     "soda":              "0.2.5"
   },
