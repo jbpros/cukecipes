@@ -104,12 +104,16 @@ SeleniumWorld.prototype.cleanUp = function (callback) {
 
 SeleniumWorld.prototype.tearDown = function (callback) {
   var self = this;
-  self.app.stop();
-  self.browser.close(function () {
-    self.app = null;
-    self.browser = null;
+  if (self && self.app) {
+    self.app.stop();
+    self.browser.close(function () {
+      self.app = null;
+      self.browser = null;
+      callback();
+    });
+  } else {
     callback();
-  });
+  }
 };
 
 SeleniumWorld.prototype.prepareNewRecipeAttributes = function () {
