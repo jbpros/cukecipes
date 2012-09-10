@@ -1,4 +1,4 @@
-var CukeStallSupport = function CukeStallSupport () {
+var CukeStallSupport = function CukeStallSupport() {
   if (typeof window == 'undefined')
     return; // do not run outside of browsers
 

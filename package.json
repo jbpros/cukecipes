@@ -17,9 +17,9 @@
     "nopt":     "1.0.10"
   },
   "devDependencies": {
-    "cucumber": "0.2.19",
-    "cukestall": "0.0.1",
-    "zombie": "0.12.15",
+    "cucumber":          "0.2.20",
+    "cukestall":         "0.0.2",
+    "zombie":            "0.12.15",
     "selenium-launcher": "1.1.3",
     "soda":              "0.2.5"
   },

@@ -14,9 +14,8 @@ if (options['with-cukestall']) {
 
   app.server.use(
     CukeStall.runner({
-      featurePaths:     [__dirname + '/features/manage_recipes.feature'],
-      stepDefsPaths:    [__dirname + '/features/step_definitions/recipe_stepdefs.js'],
-      supportCodePaths: [__dirname + '/features/support/cukestall.js'],
+      features: [__dirname + '/features/manage_recipes.feature'],
+      require: [__dirname + '/features/support/cukestall.js', __dirname + '/features/step_definitions/recipe_stepdefs.js'],
       backdoors: {
         reset_all: function (req, res, next) {
           Recipe.collection.drop(function() {
