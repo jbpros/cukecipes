@@ -6,7 +6,7 @@ var DEFAULT_HTTP_LISTEN_PORT = 9797;
 var App = function App(options) {
   var self = this;
   options        = options || {};
-  self.port      = options['port'] || DEFAULT_HTTP_LISTEN_PORT;
+  self.port      = options['port'] || process.env.PORT || DEFAULT_HTTP_LISTEN_PORT;
   self.logStream = options['logStream'] || process.stdout;
 
   var server = this.server = express.createServer();

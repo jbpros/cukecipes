@@ -2,11 +2,13 @@ var nopt = require('nopt');
 var App  = require('./app');
 var app  = new App();
 
-var knownOptions = { "with-cukestall": Boolean };
-var shortOptions = {};
-var options      = nopt(knownOptions, shortOptions, process.argv);
+var knownOptions  = { "with-cukestall": Boolean };
+var shortOptions  = {};
+var options       = nopt(knownOptions, shortOptions, process.argv);
+var withCukestall = options['with-cukestall'] || process.env.WITH_CUKESTALL;
+withCukestall     = withCukestall == "1" || withCukestall == "true";
 
-if (options['with-cukestall']) {
+if (withCukestall) {
   var CukeStall = require('cukestall');
   var Recipe    = require('./app/models/recipe');
 
