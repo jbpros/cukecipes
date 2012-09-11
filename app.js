@@ -13,6 +13,17 @@ var App = function App(options) {
   server.configure(function () {
     server.use(express.logger({format: 'dev', stream: self.logStream}));
     server.use(express.bodyParser());
+    server.use(express.cookieParser());
+    server.use(function (req, res, next) {
+      if (req.cookies.sandboxid)
+        var sandboxId = req.cookies.sandboxid;
+      else {
+        var sandboxId = Date.now();
+        res.cookie('sandboxid', sandboxId);
+      }
+      req.Recipe = Recipe.isolateInCollection("recipes-" + sandboxId);
+      next();
+    });
     server.use(server.router);
     server.use(express.static(__dirname + '/public'));
     server.set('view engine', 'ejs');
@@ -27,7 +38,7 @@ var App = function App(options) {
   });
 
   server.get('/recipes', function (req, res) {
-    Recipe.find({}, function (err, recipes) {
+    req.Recipe.find({}, function (err, recipes) {
       res.render('recipes/index', {recipes: recipes});
     });
   });
@@ -37,13 +48,13 @@ var App = function App(options) {
   });
 
   server.get('/recipes/:id', function (req, res) {
-    Recipe.findById(req.params.id, function (err, recipe) {
+    req.Recipe.findById(req.params.id, function (err, recipe) {
       res.render('recipes/show', {recipe: recipe});
     });
   });
 
   server.post('/recipes', function(req, res) {
-    var recipe = new Recipe(req.body.recipe);
+    var recipe = new req.Recipe(req.body.recipe);
     recipe.save();
     res.redirect('/recipes');
   });

@@ -20,7 +20,7 @@ if (withCukestall) {
       require: [__dirname + '/features/support/cukestall.js', __dirname + '/features/step_definitions/recipe_stepdefs.js'],
       backdoors: {
         reset_all: function (req, res, next) {
-          Recipe.collection.drop(function() {
+          req.Recipe.collection.drop(function() {
             res.end("Done.");
           });
         }
