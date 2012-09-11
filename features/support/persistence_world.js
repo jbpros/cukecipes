@@ -1,5 +1,4 @@
 var assert   = require('assert');
-var mongoose = require('mongoose');
 var Recipe   = require('../../app/models/recipe');
 
 var PersistenceWorld = function PersistenceWorld(callback) {
