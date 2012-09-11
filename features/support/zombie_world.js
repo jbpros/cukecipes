@@ -40,10 +40,12 @@ ZombieWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
       if (self.browser.text('body').indexOf(self.newRecipeAttributes.title) == -1)
         callback.fail("Recipe title not found (" + self.newRecipeAttributes.title + ").");
 
-      if (self.browser.text('body').indexOf(self.newRecipeAttributes.ingredients) == -1)
-        callback.fail("Recipe ingredients not found (" + self.newRecipeAttributes.ingredients + ").");
 
-      if (self.browser.text('body').indexOf(self.newRecipeAttributes.instructions) == -1)
+      if (stripString(self.browser.text('body')).indexOf(stripString(self.newRecipeAttributes.ingredients)) == -1) {
+        callback.fail("Recipe ingredients not found (" + self.newRecipeAttributes.ingredients + ").");
+      }
+
+      if (stripString(self.browser.text('body')).indexOf(stripString(self.newRecipeAttributes.instructions)) == -1)
         callback.fail("Recipe instructions not found (" + self.newRecipeAttributes.instructions + ").");
 
       else
@@ -82,5 +84,9 @@ Test cucumbers with a fork for doneness.\n\
 If they appear too hard, cook another 5 minutes on 80%."
   };
 };
+
+function stripString(string) {
+  return string.replace(/[\s\n]+/gm, ' ');
+}
 
 exports.World = ZombieWorld;
