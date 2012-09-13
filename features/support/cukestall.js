@@ -1,3 +1,5 @@
+var async = require("async");
+
 var CukeStallSupport = function CukeStallSupport() {
   if (typeof window == 'undefined')
     return; // do not run outside of browsers
@@ -5,11 +7,9 @@ var CukeStallSupport = function CukeStallSupport() {
   // --- WORLD ---
 
   var CukeStallWorld = function CukeStallWorld(callback) {
-    this.browser = new window.CukeStall.FrameBrowser('#cucumber-browser');
-    this.runInSequence(
-      this.cleanUp,
-      callback
-    );
+    var driver = new window.Kite.Driver.Cukestall();
+    this.browser = new Kite.Browser(driver);
+    this.cleanUp(callback);
   };
 
   this.World = CukeStallWorld;
@@ -17,58 +17,44 @@ var CukeStallSupport = function CukeStallSupport() {
   // DSL
 
   CukeStallWorld.prototype.addNewRecipe = function (callback) {
-    var self = this;
+    var self    = this;
+    var browser = self.browser;
+    var attributes = self.prepareNewRecipeAttributes();
 
-    self.prepareNewRecipeAttributes();
-    var visitRoot               = self.browser.visitUrl("/");
-    var clickAddRecipeLink      = self.browser.clickLink("Add recipe");
-    var fillInTitle             = self.browser.fillIn("#recipe_title", self.newRecipeAttributes.title);
-    var fillInIngredients       = self.browser.fillIn("#recipe_ingredients", self.newRecipeAttributes.ingredients);
-    var fillInInstructions      = self.browser.fillIn("#recipe_instructions", self.newRecipeAttributes.instructions);
-    var clickCreateRecipeButton = self.browser.clickButton("button[type='submit'][name='save']");
-    var waitForPageToLoad       = self.browser.waitForPageToLoad();
-    self.runInSequence(
-      visitRoot,
-      clickAddRecipeLink,
-      fillInTitle,
-      fillInIngredients,
-      fillInInstructions,
-      clickCreateRecipeButton,
-      waitForPageToLoad,
-      callback
-    );
+    async.waterfall([
+      function (next) { browser.visitUri("/", next); },
+      function (next) { browser.click("Add recipe", next); },
+      function (next) { browser.fill("#recipe_title", attributes.title, next); },
+      function (next) { browser.fill("#recipe_ingredients", attributes.ingredients, next); },
+      function (next) { browser.fill("#recipe_instructions", attributes.instructions, next); },
+      function (next) { browser.click("button[type='submit'][name='save']", next); },
+      function (next) { setTimeout(next, 100); } // todo: waitForPageToLoad
+    ], callback);
   };
 
   CukeStallWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
-    var self = this;
+    var self    = this;
+    var browser = self.browser;
+    var attributes = self.prepareNewRecipeAttributes();
 
-    var visitRoot                         = self.browser.visitUrl("/");
-    var clickRecipeLink                   = self.browser.clickLink(self.newRecipeAttributes.title);
-    var waitForPageToLoad                 = self.browser.waitForPageToLoad();
-    var assertDisplayedRecipeTitle        = self.browser.assertBodyText(self.newRecipeAttributes.title);
-    var assertDisplayedRecipeIngredients  = self.browser.assertBodyText(self.newRecipeAttributes.ingredients);
-    var assertDisplayedRecipeInstructions = self.browser.assertBodyText(self.newRecipeAttributes.instructions);
-    self.runInSequence(
-      visitRoot,
-      clickRecipeLink,
-      waitForPageToLoad,
-      assertDisplayedRecipeTitle,
-      assertDisplayedRecipeIngredients,
-      assertDisplayedRecipeInstructions,
-      callback
-    );
+    async.waterfall([
+      function (next) { browser.visitUri("/", next); },
+      function (next) { browser.click(self.newRecipeAttributes.title, next); },
+      function (next) { setTimeout(next, 100); }, // todo: waitForPageToLoad
+      function (next) { self.assertTextOnPage("recipe title", self.newRecipeAttributes.title, next); },
+      function (next) { self.assertTextOnPage("recipe ingredients", self.newRecipeAttributes.ingredients, next); },
+      function (next) { self.assertTextOnPage("recipe instructions", self.newRecipeAttributes.instructions, next); },
+    ], callback);
   };
 
   // helpers
 
   CukeStallWorld.prototype.cleanUp = function (callback) {
-    var resetAllRemotely = RemoteCommand("reset_all");
-    var visitRoot        = this.browser.visitUrl("about:blank");
-    this.runInSequence(
-      resetAllRemotely,
-      visitRoot,
-      callback
-    );
+    var browser = this.browser;
+    async.waterfall([
+      function (next) { command("reset_all", null, next); },
+      function (next) { browser.visitUri("about:blank", next); }
+    ], callback);
   };
 
   CukeStallWorld.prototype.prepareNewRecipeAttributes = function () {
@@ -85,47 +71,36 @@ Sprinkle with a third of the cheese, & season with salt & pepper.\n\
 Repeat these layers, finishing with cheese. Dot the top with butter.\n\
 Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes."
     };
+    return this.newRecipeAttributes;
   };
 
-  CukeStallWorld.prototype.runInSequence = function () {
-    var self      = this;
-    var funcCalls = Array.prototype.slice.apply(arguments);
-    var funcCall  = funcCalls.shift();
-    if (funcCalls.length > 0) {
-      var subCallback = function () { self.runInSequence.apply(self, funcCalls) };
-      funcCall.call(self, subCallback);
-    } else {
-      funcCall.call(self);
-    }
-  };
+  CukeStallWorld.prototype.assertTextOnPage = function (description, text, callback) {
+    this.browser.getText(function (pageText) {
+      var expected = normalizeString(text);
+      var actual   = normalizeString(pageText);
+      if (actual.indexOf(expected) == -1)
+        callback(new Error("Couldn't find " + description + " in\n\"" + pageText + "\""));
+      else
+        callback(null);
+    });
+  }
 
-  // Remote calls
-
-  var getRemoteUrlForFunction = function (funcName) {
+  function getRemoteUrlForFunction(funcName) {
+    // todo: unforge path
     return "/cukestall/" + funcName;
   };
 
-  var RemoteQuery = function RemoteQuery(funcName, data) {
-    var self = this;
-
-    return function (callback) {
-      var url = getRemoteUrlForFunction(funcName);
-      $.getJSON(url, data, function (results, textStatus, jqXHR) {
-        callback(results);
-      });
-    };
+  function command(funcName, data, callback) {
+    var url = getRemoteUrlForFunction(funcName);
+    $.post(url, data, function (results, textStatus, jqXHR) {
+      // todo: handle errors
+      callback(null);
+    });
   };
 
-  var RemoteCommand = function RemoteCommand(funcName, data) {
-    var self = this;
-
-    return function (callback) {
-      var url = getRemoteUrlForFunction(funcName);
-      $.post(url, data, function (results, textStatus, jqXHR) {
-        callback();
-      });
-    };
-  };
+  function normalizeString(string) {
+    return string.replace(/[\s\n]+/gm, ' ');
+  }
 };
 
 module.exports = CukeStallSupport;

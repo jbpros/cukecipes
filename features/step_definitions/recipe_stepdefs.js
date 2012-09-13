@@ -8,13 +8,22 @@ var recipeStepDefs = function() {
   });
 
   this.When(/^I add a recipe$/, function(callback) {
-    this.addNewRecipe(callback);
+    this.addNewRecipe(handleStepResult(callback));
   });
 
   this.Then(/^I see the recipe in the diary$/, function(callback) {
-    this.assertNewRecipeIsInDiary(callback);
+    this.assertNewRecipeIsInDiary(handleStepResult(callback));
   });
 };
+
+function handleStepResult(callback) {
+  return function (err) {
+    if (err)
+      callback.fail(err);
+    else
+      callback();
+  };
+}
 
 // Node.js:
 if (typeof(module) !== 'undefined')
