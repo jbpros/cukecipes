@@ -18,9 +18,9 @@
   },
   "devDependencies": {
     "cucumber":  "0.2.21",
-    "cukestall": "0.0.2",
-    "async":     "0.1.22",
-    "kite":      "0.0.0"
+    "cukestall": "0.1.0",
+    "kite":      "0.0.0",
+    "async":     "0.1.22"
   },
   "optionalDependencies": {},
   "engines": {
