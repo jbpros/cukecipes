@@ -81,7 +81,9 @@ Bake the cucumber gratin in the center of a preheated oven at 400 for 30 minutes
 };
 
 KiteWorld.prototype.assertTextOnPage = function (description, text, callback) {
-  this.browser.getText(function (pageText) {
+  this.browser.getText(function (err, pageText) {
+    if (err)
+      throw err;
     var expected = normalizeString(text);
     var actual   = normalizeString(pageText);
     if (actual.indexOf(expected) == -1)
