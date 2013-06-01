@@ -1,8 +1,10 @@
+require("./env");
 var fs       = require('fs');
 var selenium = require('selenium-launcher');
 var soda     = require('soda');
 var App      = require('../../app.js');
 var Browser  = require("zombie");
+var Recipe   = require("../../app/models/recipe");
 
 var SeleniumWorld = function SeleniumWorld(callback) {
   var LOG_FILE       = __dirname + '/../../log/cucumber.selenium.log';
