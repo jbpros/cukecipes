@@ -48,6 +48,14 @@ var App = function App(options) {
     recipe.save();
     res.redirect('/recipes');
   });
+
+  server.post('/ratings', function (req, res) {
+    Recipe.findById(req.body.recipeId, function (err, recipe) {
+      recipe.rate(req.body.rating, function (err) {
+        res.render('recipes/show', {recipe: recipe});
+      });
+    });
+  });
 };
 
 App.prototype.start = function start() {

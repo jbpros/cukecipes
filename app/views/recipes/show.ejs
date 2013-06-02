@@ -7,3 +7,23 @@
 <p>
   <%-: recipe.instructions | replace:/\n/g,"<br/>\n" %>
 </p>
+
+<h3>Ratings</h3>
+<ul>
+<% for (var rating in recipe.ratings) { %>
+  <li><%- rating %>: <%- recipe.ratings[rating] %></li>
+<% } %>
+</ul>
+
+<form method="post" action="/ratings">
+  <input type="hidden" name="recipeId" value="<%-: recipe.id %>">
+  <p>
+    <label>Rate as</label>
+    <select name="rating">
+      <option value="excellent">excellent</option>
+    </select>
+  </p>
+  <p>
+    <button type="submit" name="rate">Rate</button>
+  </p>
+</form>

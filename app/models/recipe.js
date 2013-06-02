@@ -4,13 +4,19 @@ var mongoDbUri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb:
 mongoose.connect(mongoDbUri);
 
 var Schema   = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
 
 var RecipeSchema = new Schema({
   title: String,
   ingredients: String,
-  instructions: String
+  instructions: String,
+  ratings: { type: Schema.Types.Mixed, default: {} }
 });
+
+RecipeSchema.methods.rate = function rate(rating, callback) {
+  this.ratings[rating] = 1;
+  this.markModified("ratings");
+  this.save(callback);
+};
 
 var Recipe = mongoose.model('Recipe', RecipeSchema);
 

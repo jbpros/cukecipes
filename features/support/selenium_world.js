@@ -50,6 +50,18 @@ var SeleniumWorld = function SeleniumWorld(callback) {
   self.cleanUp(init);
 };
 
+SeleniumWorld.prototype.prepareARecipe = function (callback) {
+  var self = this;
+
+  self.prepareNewRecipeAttributes();
+  var recipe = new Recipe(self.newRecipeAttributes);
+  recipe.save(function (err) {
+    if (err) return callback(err);
+    self.recipe = recipe;
+    callback();
+  });
+};
+
 SeleniumWorld.prototype.addNewRecipe = function (callback) {
   var self = this;
 
@@ -68,6 +80,20 @@ SeleniumWorld.prototype.addNewRecipe = function (callback) {
       else
         callback();
     });
+};
+
+SeleniumWorld.prototype.rateRecipe = function (rating, callback) {
+  var self = this;
+
+  self.rating = rating;
+
+  self.browser
+    .chain
+    .open('/')
+    .clickAndWait('link='+self.newRecipeAttributes.title)
+    .select('name=rating', rating)
+    .clickAndWait('name=rate')
+    .end(callback);
 };
 
 SeleniumWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
@@ -95,6 +121,21 @@ SeleniumWorld.prototype.assertNewRecipeIsInDiary = function (callback) {
       else
         callback();
     });
+};
+
+SeleniumWorld.prototype.assertRecipeHasRating = function (callback) {
+  var self = this;
+
+  self.browser
+    .chain
+    .getBodyText(function (text, cb) {
+      if (text.indexOf(self.newRecipeAttributes.title) == -1)
+        throw new Error("Recipe title not found (" + self.newRecipeAttributes.title + ").");
+
+      if (text.indexOf(self.rating + ": 1") == -1)
+        throw new Error("Recipe was expected to be rated as '" + self.rating + "'");
+    })
+    .end(callback);
 };
 
 SeleniumWorld.prototype.cleanUp = function (callback) {
